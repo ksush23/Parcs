@@ -42,15 +42,15 @@ public class Main {
 
             for (int j = 0; j < 6; j++) {
                 List<Double> part = (List<Double>) channel.readObject();
-
-                System.out.println("Red: " + part.get(0));
-                System.out.println("Green: " + part.get(1));
-                System.out.println("Blue: " + part.get(2));
-                System.out.println("L: " + part.get(3));
-                System.out.println("Channel a: " + part.get(4));
-                System.out.println("Channel b: " + part.get(5));
-
-                System.out.println("\n");
+                System.out.println("Successful");
+//                System.out.println("Red: " + part.get(0));
+//                System.out.println("Green: " + part.get(1));
+//                System.out.println("Blue: " + part.get(2));
+//                System.out.println("L: " + part.get(3));
+//                System.out.println("Channel a: " + part.get(4));
+//                System.out.println("Channel b: " + part.get(5));
+//
+//                System.out.println("\n");
             }
         }
 
