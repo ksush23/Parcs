@@ -7,7 +7,7 @@ public class App implements AM {
 
     public static void main(String[] args) {
         task curtask = new task();
-        curtask.addJarFile("Main.jar");
+        curtask.addJarFile("Algo.jar");
         (new App()).run(new AMInfo(curtask, (channel)null));
         curtask.end();
     }
