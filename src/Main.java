@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         task curtask = new task();
-        curtask.addJarFile("Algo.jar");
+        curtask.addJarFile("Main.jar");
 
         AMInfo info = new AMInfo(curtask, null);
 
