@@ -1,20 +1,18 @@
-import java.awt.image.BufferedImage;
 import java.io.*;
 import parcs.*;
-
-import javax.imageio.ImageIO;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Main {
+public class Main implements AM {
 
-
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         task curtask = new task();
         curtask.addJarFile("Main.jar");
+        (new Main()).run(new AMInfo(curtask, (channel)null));
+        curtask.end();
+    }
 
-        AMInfo info = new AMInfo(curtask, null);
-
+    public void run(AMInfo info) {
         System.out.println("Start executing");
         long startTime = System.nanoTime();
 
@@ -48,7 +46,5 @@ public class Main {
 
         double estimatedTime = (double) (System.nanoTime() - startTime) / 1000000000;
         System.out.println("Time total (excluding IO): " + estimatedTime);
-
-        curtask.end();
     }
 }
