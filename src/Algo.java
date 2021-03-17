@@ -6,7 +6,7 @@ import java.util.List;
 import java.io.*;
 import parcs.*;
 
-public class Algo implements AM {
+class Algo implements AM {
     public void run(AMInfo info){
         
         File file = (File) info.parent.readObject();
