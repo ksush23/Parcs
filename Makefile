@@ -17,3 +17,4 @@ build: out/Main.jar out/Algo.jar
 
 run: out/Main.jar out/Algo.jar
 	@cd out && java -cp 'parcs.jar:Main.jar' Main
+	@cd out && java -cp 'parcs.jar:Algo.jar' Algo
