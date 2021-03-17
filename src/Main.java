@@ -1,5 +1,3 @@
-package com.company;
-
 import java.awt.image.BufferedImage;
 import java.io.*;
 import parcs.*;
