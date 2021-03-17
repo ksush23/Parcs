@@ -3,7 +3,7 @@ import parcs.*;
 import java.util.List;
 import java.util.ArrayList;
 
-public class App implements AM {
+public class Algo implements AM {
 
     public static void main(String[] args) {
         task curtask = new task();
