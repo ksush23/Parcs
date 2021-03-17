@@ -5,7 +5,7 @@ clean:
 
 out/Main.jar: out/parcs.jar src/Main.java src/Algo.java
 	@javac -cp out/parcs.jar src/Main.java src/Algo.java
-	@jar cf out/Main.jar -C src Main.class -C src Algo.class -C src Algo.class
+	@jar cf out/Main.jar -C src Main.class -C src Algo.class
 	@rm -f src/Main.class src/Algo.class
 
 out/Algo.jar: out/parcs.jar src/Algo.java
