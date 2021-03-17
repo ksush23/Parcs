@@ -27,7 +27,7 @@ public class Main implements AM {
         for (File photo : photos) {
             point p = info.createPoint();
             channel c = p.createChannel();
-            p.execute("Algo.class");
+            p.execute("Algo");
             c.write(photo);
             channels.add(c);
         }
