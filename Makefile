@@ -1,12 +1,12 @@
 ll: run
 
 clean:
-	rm -f src/*.class out/Main.jar
+	rm -f src/*.class out/Algo.jar
 
-Main.jar: out/parcs.jar src/*.java
+Algo.jar: out/parcs.jar src/*.java
 	@javac -cp out/parcs.jar src/*.java
-	@jar cf out/Main.jar -C src .
+	@jar cf out/Algo.jar -C src .
 	@rm -f src/*.class
 
-run: Main.jar
-	@cd out && java -cp 'parcs.jar:Main.jar' Main
+run: Algo.jar
+	@cd out && java -cp 'parcs.jar:Algo.jar' Algo
