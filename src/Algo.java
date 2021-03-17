@@ -6,9 +6,10 @@ import parcs.*;
 
 public class Algo implements AM{
     public void run(AMInfo info) {
-
-        BufferedImage image = (BufferedImage) info.parent.readObject();
-
+        
+        File file = (File) info.parent.readObject();
+        BufferedImage image = ImageIO.read(file);
+        
         int width = image.getWidth();
         int height = image.getHeight();
         int size = width * height;
