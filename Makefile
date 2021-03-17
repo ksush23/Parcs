@@ -8,5 +8,5 @@ Main.jar: out/parcs.jar src/*.java
 	@jar cf out/Main.jar -C src .
 	@rm -f src/*.class
 
-run: App.jar
+run: Main.jar
 	@cd out && java -cp 'parcs.jar:Main.jar' Main
