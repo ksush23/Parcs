@@ -22,12 +22,11 @@ public class Main {
         int n = 20;
         for (int i = 0; i < n; i++){
             File file = new File("photo1.jpg");
-            BufferedImage image = ImageIO.read(file);
-            photos.add(image);
+            photos.add(file);
         }
 
         List<channel> channels = new ArrayList<>();
-        for (BufferedImage photo : photos) {
+        for (File photo : photos) {
             point p = info.createPoint();
             channel c = p.createChannel();
             p.execute("Algo");
