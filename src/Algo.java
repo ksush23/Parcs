@@ -1,50 +1,100 @@
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.*;
 import parcs.*;
-import java.util.List;
-import java.util.ArrayList;
 
-public class Algo implements AM {
+class Algo implements AM {
+    public void run(AMInfo info){
 
-    public static void main(String[] args) {
-        task curtask = new task();
-        curtask.addJarFile("Main.jar");
-        (new App()).run(new AMInfo(curtask, (channel)null));
-        curtask.end();
-    }
-
-    public void run(AMInfo info) {
-        System.out.println("Start executing");
-        long startTime = System.nanoTime();
-
-        List<File> photos = new ArrayList<>();
-        int n = 20;
-        for (int i = 0; i < n; i++){
-            File file = new File("photo1.jpg");
-            photos.add(file);
+        File file = (File) info.parent.readObject();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(file);
+            System.out.println("Success");
+        } catch (IOException e) {
+            System.out.println("Fail");
+            e.printStackTrace();
+            return;
         }
 
-        List<channel> channels = new ArrayList<>();
-        for (File photo : photos) {
-            point p = info.createPoint();
-            channel c = p.createChannel();
-            p.execute("Algo");
-            c.write(photo);
-            channels.add(c);
-        }
-
-        int i = 1;
-
-        for (parcs.channel channel : channels) {
-            System.out.println("\n\n\n\n Processing a photo number " + String.valueOf(i));
-            i++;
-
-            for (int j = 0; j < 6; j++) {
-                String part = (String) channel.readObject();
-                System.out.println(part + "\n");
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int size = width * height;
+        int k = 1;
+        for (int part = 0; part < 5; part++) {
+            k++;
+            List<Double> part1 = new ArrayList<>();
+            int sum_red = 0, sum_green = 0, sum_blue = 0;
+            // Getting pixel color by position x and y
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    int clr = image.getRGB(i, j);
+                    int red = (clr & 0x00ff0000) >> 16;
+                    int green = (clr & 0x0000ff00) >> 8;
+                    int blue = clr & 0x000000ff;
+                    if (red % (part + 1) != 0) {
+                        sum_red += red;
+                        sum_green += green;
+                        sum_blue += blue;
+                    } else {
+                        sum_red += part + red + k;
+                        sum_green += green * 3 + k % 2;
+                        sum_blue += blue - 2 + k % 3;
+                    }
+                }
             }
-        }
 
-        double estimatedTime = (double) (System.nanoTime() - startTime) / 1000000000;
-        System.out.println("Time total (excluding IO): " + estimatedTime);
+            part1.add((double)(sum_red / size));
+            part1.add((double)(sum_green / size));
+            part1.add((double)(sum_blue / size));
+
+            double sum_L = 0, sum_a = 0, sum_b = 0;
+            for (int i = 0; i < width; i++) {
+                for (int j = 0; j < height; j++) {
+                    int clr = image.getRGB(i, j);
+                    int red = (clr & 0x00ff0000) >> 16;
+                    int green = (clr & 0x0000ff00) >> 8;
+                    int blue = clr & 0x000000ff;
+
+                    double[] Cielab = toCIEXYZ((double) red, (double) green, (double) blue);
+
+                    if (blue % (part + 1) != 0) {
+                        sum_L += Cielab[0];
+                        sum_a += Cielab[1];
+                        sum_b += Cielab[2];
+                    } else {
+                        sum_L += Cielab[0] * (part + 1) - 2 + k * 0.5;
+                        sum_a += Cielab[1] - 2.5 + k;
+                        sum_b += Cielab[2] * (part + 1) + 1.3 + k % 2;
+                    }
+                }
+            }
+            part1.add(sum_L / size);
+            part1.add(sum_a / size);
+            part1.add(sum_b / size);
+            String result = "Red: " + sum_red / size + "\nGreen: " + sum_green / size + "\nBlue: " + sum_blue / size +
+                    "\nL: " + sum_L / size + "\nChannel a: " + sum_a / size + "\nChannel b: " + sum_b / size;
+            info.parent.write(result);
+        }
     }
+    public static double[] toCIEXYZ(double red, double green, double blue){
+        double i = (red + 16.0) * (1.0 / 116.0);
+        double X = fInv(i + green * (1.0 / 500.0));
+        double Y = fInv(i);
+        double Z = fInv(i - blue * (1.0 / 200.0));
+        return new double[] {X, Y, Z};
+    }
+
+    private static double fInv(double x) {
+        if (x > 6.0 / 29.0) {
+            return x*x*x;
+        } else {
+            return (108.0 / 841.0) * (x - N);
+        }
+    }
+
+    private static final double N = 4.0 / 29.0;
 }
