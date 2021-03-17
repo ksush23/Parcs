@@ -3,14 +3,20 @@ import javax.imageio.ImageIO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 import parcs.*;
 
-public class Algo implements AM{
-    public void run(AMInfo info) {
+public class Algo implements AM {
+    public void run(AMInfo info){
         
         File file = (File) info.parent.readObject();
-        BufferedImage image = ImageIO.read(file);
-        
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         int width = image.getWidth();
         int height = image.getHeight();
         int size = width * height;
@@ -69,7 +75,7 @@ public class Algo implements AM{
             info.parent.write((Serializable) part1);
         }
     }
-        public static double[] toCIEXYZ(double red, double green, double blue) {
+        public static double[] toCIEXYZ(double red, double green, double blue){
             double i = (red + 16.0) * (1.0 / 116.0);
             double X = fInv(i + green * (1.0 / 500.0));
             double Y = fInv(i);
