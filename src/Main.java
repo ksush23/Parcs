@@ -18,7 +18,7 @@ public class Main {
         System.out.println("Start executing");
         long startTime = System.nanoTime();
 
-        List<BufferedImage> photos = new ArrayList<>();
+        List<File> photos = new ArrayList<>();
         int n = 20;
         for (int i = 0; i < n; i++){
             File file = new File("photo1.jpg");
