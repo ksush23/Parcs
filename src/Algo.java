@@ -13,8 +13,11 @@ public class Algo implements AM {
         BufferedImage image = null;
         try {
             image = ImageIO.read(file);
+            System.out.println("Success");
         } catch (IOException e) {
+            System.out.println("Fail");
             e.printStackTrace();
+            return;
         }
 
         int width = image.getWidth();
