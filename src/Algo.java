@@ -75,7 +75,9 @@ class Algo implements AM {
             part1.add(sum_L / size);
             part1.add(sum_a / size);
             part1.add(sum_b / size);
-            info.parent.write((Serializable) part1);
+            String result = "Red: " + sum_red / size + "\nGreen: " + sum_green / size + "\nBlue: " + sum_blue / size +
+                    "\nL: " + sum_L / size + "\nChannel a: " + sum_a / size + "\nChannel b: " + sum_b / size;
+            info.parent.write(result);
         }
     }
         public static double[] toCIEXYZ(double red, double green, double blue){
